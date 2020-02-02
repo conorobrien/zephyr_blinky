@@ -1,0 +1,71 @@
+/*
+ * Copyright (c) 2017 I-SENSE group of ICCS
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include "stm32f303X8.dtsi"
+
+/ {
+	model = "STMicroelectronics NUCLEO-F303k8 board";
+	compatible = "st,stm32f303k8-nucleo", "st,stm32f303";
+
+	chosen {
+		zephyr,console = &usart2;
+		zephyr,shell-uart = &usart2;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		green_led: led_3 {
+			gpios = <&gpiob 3 GPIO_INT_ACTIVE_HIGH>;
+			label = "User LD3";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+
+		green_pwm_led: green_pwm_led {
+			pwms = <&{/soc/timers@40000000/pwm} 2 4>;
+		};
+	};
+
+	aliases {
+		led0 = &green_led;
+		pwm-led0 = &green_pwm_led;
+	};
+};
+
+&usart2 {
+	current-speed = <115200>;
+	status = "okay";
+};
+
+&timers2 {
+	status = "okay";
+
+	pwm {
+		status = "okay";
+	};
+};
+// &flash0 {
+// 	/*
+// 	 * For more information, see:
+// 	 * http://docs.zephyrproject.org/latest/guides/dts/index.html#flash-partitions
+// 	 */
+// 	partitions {
+// 		compatible = "fixed-partitions";
+// 		#address-cells = <1>;
+// 		#size-cells = <1>;
+
+// 		/* Set 6Kb of storage at the end of the 64kb of flash */
+// 		storage_partition: partition@e800 {
+// 			label = "storage";
+// 			reg = <0x0000e800 0x00001800>;
+// 		};
+// 	};
+// };

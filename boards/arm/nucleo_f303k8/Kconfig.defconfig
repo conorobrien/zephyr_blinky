@@ -1,0 +1,25 @@
+# STM32F3DISCOVERY board configuration
+
+# Copyright (c) 2017 I-SENSE group of ICCS
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_NUCLEO_F303K8
+
+config BOARD
+	default "nucleo_f303k8"
+
+if UART_CONSOLE
+
+config UART_2
+	default y
+
+endif # UART_CONSOLE
+
+if PWM
+
+config PWM_STM32_2
+	default y
+
+endif
+
+endif # BOARD_NUCLEO_F303K8
